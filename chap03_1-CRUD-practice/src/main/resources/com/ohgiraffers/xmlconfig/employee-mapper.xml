@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="EmployeeMapper">
+
+    <!-- resultMap : 조회한 컬럼과 DTO를 매핑시키기 위한 설정 -->
+    <resultMap id="empResultMap" type="com.ohgiraffers.xmlconfig.EmpDTO">
+        <id property="empId" column="EMP_ID"/>
+        <result property="empName" column="EMP_NAME"/>
+        <result property="empNo" column="EMP_NO"/>
+        <result property="email" column="EMAIL"/>
+        <result property="phone" column="PHONE"/>
+        <result property="deptCode" column="dept_Code"/>
+        <result property="jobCode" column="job_Code"/>
+        <result property="salLevel" column="sal_Level"/>
+        <result property="salary" column="SALARY"/>
+        <result property="hireDate" column="HIRE_DATE"/>
+        <result property="entDate" column="ENT_DATE"/>
+        <result property="entYN" column="ENT_YN"/>
+    </resultMap>
+
+    <select id="selectAllEmployee" resultMap="empResultMap">
+        select EMP_ID,
+        EMP_NAME,
+        EMP_NO,
+        EMAIL,
+        PHONE,
+        dept_Code,
+        job_Code,
+        sal_Level,
+        SALARY,
+        HIRE_DATE,
+        ENT_DATE,
+        ENT_YN
+        from employee
+        where ENT_YN = 'N'
+    </select>
+
+<!--  파라미터가 한 개인 경우 바인딩 되는 이름은 상관없으며 파라미터 타입은 지정하지 않아도 된다.
+      - resultMap : 위에서 생성한 resultMap을 리턴 타입으로 이용하는 경우
+      - resultType : 이미 정의되어 있는 타입을 이용하여 리턴 타입으로 이용하는 경우
+      - parameterType : 매개변수로 받을 타입을 지정한다. 기본형은 앞에 _를 붙여주는것이 관례
+-->
+    <select id="selectEmployeeById" parameterType="String" resultMap="empResultMap">
+        select EMP_ID,
+        EMP_NAME,
+        EMP_NO,
+        EMAIL,
+        PHONE,
+        dept_Code,
+        job_Code,
+        sal_Level,
+        SALARY,
+        HIRE_DATE,
+        ENT_DATE,
+        ENT_YN
+        from employee
+        where EMP_ID = #{ empId }
+    </select>
+
+    <select id="selectEmployeeByName" parameterType="String" resultMap="empResultMap">
+        select EMP_ID,
+        EMP_NAME,
+        EMP_NO,
+        EMAIL,
+        PHONE,
+        dept_Code,
+        job_Code,
+        sal_Level,
+        SALARY,
+        HIRE_DATE,
+        ENT_DATE,
+        ENT_YN
+        from employee
+        where EMP_NAME = #{ empName }
+    </select>
+
+<!--    insert, update, delete는 resultType을 작성하지 않고, 기본 _int 수행 결과를 반환한다.-->
+<!--    파라미터로 전달된 DTO의 필드명으로 값을 바인딩 해야하며, getter를 이용하므로 getter가 없으면 에러 발생-->
+    <insert id="insertEmployee" parameterType="com.ohgiraffers.xmlconfig.EmpDTO">
+        insert into employee (
+        EMP_ID,
+        EMP_NAME,
+        EMP_NO,
+        EMAIL,
+        PHONE,
+        dept_Code,
+        job_Code,
+        sal_Level,
+        SALARY,
+        HIRE_DATE,
+        ENT_DATE,
+        ENT_YN
+        ) values (
+        #{ empId },
+        #{ empName },
+        #{ empNo },
+        #{ email },
+        #{ phone },
+        #{ deptCode },
+        #{ jobCode },
+        #{ salLevel },
+        #{ salary },
+        #{ hireDate },
+        #{ entDate },
+        #{ entYN }
+        )
+    </insert>
+
+    <update id="updateEmployee" parameterType="com.ohgiraffers.xmlconfig.EmpDTO">
+        update employee
+        set
+        emp_name =  #{ name },
+        emp_price = #{ price },
+        category_code = #{ categoryCode }
+        where
+        emp_code = #{ code }
+    </update>
+
+    <delete id="deleteMenu" parameterType="_int">
+        delete
+        from employee
+        where
+        emp_code = #{ code }
+    </delete>
+</mapper>
