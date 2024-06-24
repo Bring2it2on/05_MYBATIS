@@ -16,7 +16,7 @@ public class Template {
 
 
         if(sqlSessionFactory == null) {
-            String resource = "resources/com/ohgiraffers/section01/xmlconfig/mybatis-config.xml";
+            String resource = "com/ohgiraffers/section01/xmlconfig/mybatis-config.xml";
 
             try {
                 InputStream inputStream = Resources.getResourceAsStream(resource);
@@ -28,11 +28,6 @@ public class Template {
             }
         }
 
-        SqlSession sqlSession = sqlSessionFactory.openSession(false);
-
-        System.out.println("sqlSessionFactory의 hashCode : " + sqlSessionFactory.hashCode());
-        System.out.println("sqlSession.hashCode() = " + sqlSession.hashCode());
-
-        return sqlSession;
+        return sqlSessionFactory.openSession(false);
     }
 }

@@ -1,8 +1,8 @@
-package com.ohgiraffers.xmlconfig;
+package com.ohgiraffers.remix;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Application {
 
@@ -132,16 +132,37 @@ public class Application {
     private static Map<String, String> inputModifyEmployee() {
         Scanner sc = new Scanner(System.in);
 
+        // 모든 항목 수정
+//        System.out.print("수정할 직원 아이디를 입력하세요 : ");
+//        String empId = sc.next();
+//        System.out.print("수정할 직원 부서코드를 입력하세요 : ");
+//        String deptCode = sc.next();
+//        System.out.print("수정할 직원 직업코드를 입력하세요 : ");
+//        String jobCode = sc.next();
+//        System.out.print("수정할 직원 월급수준을 입력하세요 : ");
+//        String salLevel = sc.next();
+//        System.out.print("수정할 직원 월급을 입력하세요 : ");
+//        String salary = sc.next();
+//
+//        Map<String, String> parameter = new HashMap<>();
+//        parameter.put("empId", empId);
+//        parameter.put("deptCode", deptCode);
+//        parameter.put("jobCode", jobCode);
+//        parameter.put("salLevel", salLevel);
+//        parameter.put("salary", salary);
+
+        // 원하는 항목만 수정
         System.out.print("수정할 직원 아이디를 입력하세요 : ");
         String empId = sc.next();
         System.out.print("수정할 직원 부서코드를 입력하세요 : ");
-        String deptCode = sc.next();
+        sc.nextLine();
+        String deptCode = sc.nextLine();
         System.out.print("수정할 직원 직업코드를 입력하세요 : ");
-        String jobCode = sc.next();
+        String jobCode = sc.nextLine();
         System.out.print("수정할 직원 월급수준을 입력하세요 : ");
-        String salLevel = sc.next();
+        String salLevel = sc.nextLine();
         System.out.print("수정할 직원 월급을 입력하세요 : ");
-        String salary = sc.next();
+        String salary = sc.nextLine();
 
         Map<String, String> parameter = new HashMap<>();
         parameter.put("empId", empId);
@@ -149,7 +170,6 @@ public class Application {
         parameter.put("jobCode", jobCode);
         parameter.put("salLevel", salLevel);
         parameter.put("salary", salary);
-
         return parameter;
 
     }

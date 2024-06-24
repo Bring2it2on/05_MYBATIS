@@ -111,42 +111,44 @@ public class EmpController {
         }
     }
 
-//    public void modifyEmployee(Map<String, String> parameter) {
-//
-//        int id = Integer.parseInt(parameter.get("id"));
-//        String name = parameter.get("name");
-//        int price = Integer.parseInt(parameter.get("price"));
-//        int categoryCode = Integer.parseInt(parameter.get("categoryCode"));
-//
-//        EmpDTO emp = new EmpDTO();
-//        emp.setCode(code);
-//        emp.setName(name);
-//        emp.setPrice(price);
-//        emp.setCategoryCode(categoryCode);
-//
-//        boolean result = empService.modifyEmployee(emp);
-//
-//        // view로 전달
-//        if(result) {
-//            printResult.printSuccessMessage("update");
-//        } else {
-//            printResult.printErrorMessage("update");
-//        }
-//    }
-//
-//    public void deleteEmployee(Map<String, String> parameter) {
-//
-//        int code = Integer.parseInt(parameter.get("code"));
-//
-//        boolean result = empService.deleteEmployee(code);
-//
-//        // view로 전달
-//        if(result) {
-//            printResult.printSuccessMessage("delete");
-//        } else {
-//            printResult.printErrorMessage("delete");
-//        }
-//    }
+    public void modifyEmployee(Map<String, String> parameter) {
+
+        String empId = parameter.get("empId");
+        String deptCode = parameter.get("deptCode");
+        String jobCode = parameter.get("jobCode");
+        String salLevel = parameter.get("salLevel");
+        int salary = Integer.parseInt(parameter.get("salary"));
+
+        EmpDTO emp = new EmpDTO();
+        emp.setEmpId(empId);
+        emp.setDeptCode(deptCode);
+        emp.setJobCode(jobCode);
+        emp.setSalLevel(salLevel);
+        emp.setSalary(salary);
+
+        boolean result = empService.modifyEmployee(emp);
+
+        // view로 전달
+        if(result) {
+            printResult.printSuccessMessage("update");
+        } else {
+            printResult.printErrorMessage("update");
+        }
+    }
+
+    public void deleteEmployee(Map<String, String> parameter) {
+
+        int empId = Integer.parseInt(parameter.get("empId"));
+
+        boolean result = empService.deleteEmployee(empId);
+
+        // view로 전달
+        if(result) {
+            printResult.printSuccessMessage("delete");
+        } else {
+            printResult.printErrorMessage("delete");
+        }
+    }
 
     private static java.sql.Date getSqlDate(String date) {
 

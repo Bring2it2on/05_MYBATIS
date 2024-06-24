@@ -1,41 +1,23 @@
-package com.ohgiraffers.xmlconfig;
+package com.ohgiraffers.remix;
 
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-import static com.ohgiraffers.xmlconfig.Template.getSqlSession;
+import static com.ohgiraffers.remix.Template.getSqlSession;
 
 public class EmpService {
 
-    /*
-    * Service 란?
-    *
-    * 비즈니스 로직을 수행하는 클래스라고도 함.
-    * 주로 DAO가 DB에서 받아온 데이터를 전달받아 가공해 Controller로 return 해준다.
-    *
-    * Mybatis 에서 Service의 역할
-    * 1. SqlSession 생성
-    * 2. DAO(데이터베이스 접근 객체)의 메소드 호출
-    * 3. 트랜젝션(commit, rollback) 제어
-    * */
-
-    private final EmpDAO empDAO;
-
-    // 생성자 주입
-    public EmpService() {
-        empDAO = new EmpDAO();
-    }
+    private EmployeeMapper employeeMapper;
 
     public List<EmpDTO> selectAllEmployee() {
 
-        // 세션 열어주기
         SqlSession sqlSession = getSqlSession();
 
-        // EmployeeDAO를 이용해 데이터베이스에서 empList 가져오기
-        List<EmpDTO> empList = empDAO.selectAllEmployee(sqlSession);
+        employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
 
-        // 세션 닫아주기
+        List<EmpDTO> empList = employeeMapper.selectAllEmployee();
+
         sqlSession.close();
 
         return empList;
@@ -44,10 +26,11 @@ public class EmpService {
 
     public EmpDTO selectEmployeeById(String empId) {
 
-        // 세션 열기
         SqlSession sqlSession = getSqlSession();
 
-        EmpDTO emp = empDAO.selectEmployeeByCode(sqlSession, empId);
+        employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+
+        EmpDTO emp = employeeMapper.selectEmployeeById(empId);
 
         sqlSession.close();
 
@@ -56,10 +39,11 @@ public class EmpService {
 
     public EmpDTO selectEmployeeByName(String empName) {
 
-        // 세션 열기
         SqlSession sqlSession = getSqlSession();
 
-        EmpDTO emp = empDAO.selectEmployeeByName(sqlSession, empName);
+        employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+
+        EmpDTO emp = employeeMapper.selectEmployeeByName(empName);
 
         sqlSession.close();
 
@@ -71,9 +55,9 @@ public class EmpService {
         // 세션 열기
         SqlSession sqlSession = getSqlSession();
 
-        int result = empDAO.insertEmployee(sqlSession, emp);
+        employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
 
-        // result 결과값에 따라서 insert, update, delete는 트랜젝션 처리를 해줘야함.
+        int result = employeeMapper.registEmployee(emp);
 
         if(result > 0) {
             sqlSession.commit();
@@ -83,7 +67,7 @@ public class EmpService {
 
         sqlSession.close();
 
-        return result > 0 ? true : false;
+        return result > 0;
     }
 
     public boolean modifyEmployee(EmpDTO emp) {
@@ -91,7 +75,9 @@ public class EmpService {
         // 세션 열기
         SqlSession sqlSession = getSqlSession();
 
-        int result = empDAO.UpdateEmployee(sqlSession, emp);
+        employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+
+        int result = employeeMapper.modifyEmployee(emp);
 
         if(result > 0) {
             sqlSession.commit();
@@ -109,7 +95,9 @@ public class EmpService {
         // 세션 열기
         SqlSession sqlSession = getSqlSession();
 
-        int result = empDAO.deleteEmployee(sqlSession, id);
+        employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+
+        int result = employeeMapper.deleteEmployee(id);
 
         if(result > 0) {
             sqlSession.commit();

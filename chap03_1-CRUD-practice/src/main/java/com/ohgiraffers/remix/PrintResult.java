@@ -1,4 +1,4 @@
-package com.ohgiraffers.xmlconfig;
+package com.ohgiraffers.remix;
 
 import java.util.List;
 

@@ -111,17 +111,18 @@
     <update id="updateEmployee" parameterType="com.ohgiraffers.xmlconfig.EmpDTO">
         update employee
         set
-        emp_name =  #{ name },
-        emp_price = #{ price },
-        category_code = #{ categoryCode }
+        dept_Code =  #{ deptCode },
+        job_Code = #{ jobCode },
+        sal_Level = #{ salLevel },
+        salary = #{ salary }
         where
-        emp_code = #{ code }
+        EMP_ID = #{ empId }
     </update>
 
-    <delete id="deleteMenu" parameterType="_int">
+    <delete id="deleteEmployee" parameterType="_int">
         delete
         from employee
         where
-        emp_code = #{ code }
+        EMP_ID = #{ empId }
     </delete>
 </mapper>

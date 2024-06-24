@@ -189,9 +189,9 @@
 <!--         <trim> 태그 : 조회 조건에 AND 혹은 OR로 시작하지 않는 다른 문자로 시작하는 경우 등
                           where 엘리먼트가 기본적으로 처리하는 기능에 추가 규칙을 정의하기 위해 trim 엘리먼트를 제공한다.
                           1. prefix 속성 : 처리 후 엘리먼트의 내용이 있으면 가장 앞에 붙여주는 내용 기술
-                          2. prefixOverrides 속성 : 처리 루 엘리먼트의 내용 중 가장 앞에 속성값에 해당하는 문자를 자동 삭제
+                          2. prefixOverrides 속성 : 처리 후 엘리먼트의 내용 중 가장 앞에 속성값에 해당하는 문자를 자동 삭제
                           3. suffix 속성 : 처리 후 엘리먼트의 내용이 있으면 가장 뒤에 붙여주는 내용 기술
-                          4. suffixOverrides 속성 : 처리 루 엘리먼트의 내용 중 가장 뒤에 속성값에 해당하는 문자를 자동 삭제
+                          4. suffixOverrides 속성 : 처리 후 엘리먼트의 내용 중 가장 뒤에 속성값에 해당하는 문자를 자동 삭제
 -->
         <trim prefix="where" prefixOverrides="AND | OR">
             <if test="nameValue != null">
@@ -237,7 +237,7 @@
         <!--   방법 2. <trim> 사용 -->
         update
         tbl_menu
-        <trim prefix="set" prefixOverrides=",">
+        <trim prefix="set" prefixOverrides="," suffixOverrides=",">
             <if test="name != null and name != ''">
                 menu_name = #{ name },
             </if>

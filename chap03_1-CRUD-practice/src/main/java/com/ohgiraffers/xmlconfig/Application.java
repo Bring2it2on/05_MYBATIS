@@ -37,8 +37,8 @@ public class Application {
                 case 2 : empController.selectEmployeeById(inputEmployeeId()); break;
                 case 3 : empController.selectEmployeeByName(inputEmployeeName()); break;
                 case 4 : empController.registEmployee(inputEmployee()); break;
-//                case 5 : empController.modifyEmployee(inputModifyEmployee()); break;
-//                case 6 : empController.deleteEmployee(inputEmployeeId()); break;
+                case 5 : empController.modifyEmployee(inputModifyEmployee()); break;
+                case 6 : empController.deleteEmployee(inputEmployeeId()); break;
                 case 9, 0 :
                     System.out.println("프로그램을 종료합니다.");
                     return;
@@ -132,20 +132,23 @@ public class Application {
     private static Map<String, String> inputModifyEmployee() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("수정할 아이디를 입력하세요 : ");
-        String id = sc.next();
-        System.out.print("수정할 직원 이름을 입력하세요 : ");
-        String name = sc.next();
-        System.out.print("수정할 직원 가격을 입력하세요 : ");
-        String price = sc.next();
-        System.out.print("수정할 직원 카테고리 아이디를 입력하세요 : ");
-        String categoryId = sc.next();
+        System.out.print("수정할 직원 아이디를 입력하세요 : ");
+        String empId = sc.next();
+        System.out.print("수정할 직원 부서코드를 입력하세요 : ");
+        String deptCode = sc.next();
+        System.out.print("수정할 직원 직업코드를 입력하세요 : ");
+        String jobCode = sc.next();
+        System.out.print("수정할 직원 월급수준을 입력하세요 : ");
+        String salLevel = sc.next();
+        System.out.print("수정할 직원 월급을 입력하세요 : ");
+        String salary = sc.next();
 
         Map<String, String> parameter = new HashMap<>();
-        parameter.put("id", id);
-        parameter.put("name", name);
-        parameter.put("price", price);
-        parameter.put("categoryId", categoryId);
+        parameter.put("empId", empId);
+        parameter.put("deptCode", deptCode);
+        parameter.put("jobCode", jobCode);
+        parameter.put("salLevel", salLevel);
+        parameter.put("salary", salary);
 
         return parameter;
 

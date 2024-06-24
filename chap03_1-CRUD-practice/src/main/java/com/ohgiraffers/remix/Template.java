@@ -1,31 +1,35 @@
-package com.ohgiraffers.xmlconfig;
+package com.ohgiraffers.remix;
 
-import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.datasource.pooled.PooledDataSource;
+import org.apache.ibatis.mapping.Environment;
+import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import java.io.IOException;
-import java.io.InputStream;
+import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 public class Template {
+
+    private static String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static String URL = "jdbc:mysql://localhost/employee_db";
+    private static String USER = "ohgiraffers";
+    private static String PASSWORD = "ohgiraffers";
 
     private static SqlSessionFactory sqlSessionFactory;
 
     public static SqlSession getSqlSession() {
 
-
         if(sqlSessionFactory == null) {
-            String resource = "com/ohgiraffers/xmlconfig/mybatis-config.xml";
+            Environment environment =
+                    new Environment("dev",
+                            new JdbcTransactionFactory(),
+                            new PooledDataSource(DRIVER,URL,USER,PASSWORD));
 
-            try {
-                InputStream inputStream = Resources.getResourceAsStream(resource);
+            Configuration configuration = new Configuration(environment);
 
-                sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+            configuration.addMapper(EmployeeMapper.class);
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
         }
 
         return sqlSessionFactory.openSession(false);
