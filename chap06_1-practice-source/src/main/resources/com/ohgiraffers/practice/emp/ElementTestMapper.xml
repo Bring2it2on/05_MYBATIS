@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.practice.emp.ElementTestMapper">
+
+    <cache eviction="LRU" flushInterval="1000" size="512" readOnly="true"/>
+
+    <resultMap id="empAndDepartmentResultMap" type="com.ohgiraffers.common.EmployeeAndDepartmentDTO">
+        <id property="empId" column="EMP_ID"/>
+        <result property="empName" column="EMP_NAME"/>
+        <result property="empNo" column="EMP_NO"/>
+        <result property="email" column="EMAIL"/>
+        <result property="phone" column="PHONE"/>
+        <result property="deptCode" column="dept_Code"/>
+        <result property="jobCode" column="job_Code"/>
+        <result property="salLevel" column="sal_Level"/>
+        <result property="salary" column="SALARY"/>
+        <result property="hireDate" column="HIRE_DATE"/>
+        <result property="entDate" column="ENT_DATE"/>
+        <result property="entYN" column="ENT_YN"/>
+        <association property="department" javaType="com.ohgiraffers.common.DeptDTO">
+            <id property="deptId" column="dept_id"/>
+            <result property="deptTitle" column="dept_title"/>
+            <result property="locationId" column="location_id"/>
+        </association>
+    </resultMap>
+
+    <select id="selectResultMapAssociationTest" resultMap="empAndDepartmentResultMap">
+        select
+        a.EMP_ID,
+        a.EMP_NAME,
+        a.EMP_NO,
+        a.EMAIL,
+        a.PHONE,
+        b.dept_id,
+        b.dept_title,
+        b.location_id,
+        a.job_Code,
+        a.sal_Level,
+        a.SALARY,
+        a.HIRE_DATE,
+        a.ENT_DATE,
+        a.ENT_YN
+        from employee a
+        join department b on (a.dept_Code = b.dept_id)
+        where ENT_YN = 'N'
+    </select>
+
+    <resultMap id="DepartmentAndEmployeeResultMap" type="com.ohgiraffers.common.DepartmentAndEmployeeDTO">
+        <id property="deptId" column="dept_id"/>
+        <result property="deptTitle" column="dept_title"/>
+        <result property="locationId" column="location_id"/>
+        <collection property="empList" ofType="com.ohgiraffers.common.EmpDTO">
+            <id property="empId" column="EMP_ID"/>
+            <result property="empName" column="EMP_NAME"/>
+            <result property="empNo" column="EMP_NO"/>
+            <result property="email" column="EMAIL"/>
+            <result property="phone" column="PHONE"/>
+            <result property="deptCode" column="dept_Code"/>
+            <result property="jobCode" column="job_Code"/>
+            <result property="salLevel" column="sal_Level"/>
+            <result property="salary" column="SALARY"/>
+            <result property="hireDate" column="HIRE_DATE"/>
+            <result property="entDate" column="ENT_DATE"/>
+            <result property="entYN" column="ENT_YN"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectResultMapCollectionTest" resultMap="DepartmentAndEmployeeResultMap">
+        select
+        a.dept_id,
+        a.dept_title,
+        a.location_id,
+        b.EMP_ID,
+        b.EMP_NAME,
+        b.EMP_NO,
+        b.EMAIL,
+        b.PHONE,
+        b.dept_Code,
+        b.job_Code,
+        b.sal_Level,
+        b.SALARY,
+        b.HIRE_DATE,
+        b.ENT_DATE,
+        b.ENT_YN
+        from department a
+        left join employee b on (a.dept_id = b.dept_Code)
+        where b.ENT_YN = 'N'
+        order by a.dept_id
+    </select>
+</mapper>
